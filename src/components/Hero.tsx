@@ -57,7 +57,7 @@ const heroContent = {
   },
   mockStatus: {
     zh: '主项目',
-    en: 'Case study',
+    en: 'Main project',
   },
   signal: {
     zh: '项目信号',

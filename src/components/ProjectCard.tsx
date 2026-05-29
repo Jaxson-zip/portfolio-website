@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, ExternalLink, GitBranch, Radio } from 'lucide-react'
+import { ExternalLink, GitBranch, Radio } from 'lucide-react'
 import { statusLabels, type Project } from '../data/projects'
 import { text, type Locale } from '../i18n'
+import { getProjectPrimaryAction } from '../lib/projectAction'
 import { PlannerPreview } from './PlannerPreview'
 
 const statusClass = {
@@ -17,17 +18,9 @@ type ProjectCardProps = {
 }
 
 const linkLabels = {
-  detail: {
-    zh: '查看项目详情',
-    en: 'View case study',
-  },
-  demo: {
-    zh: '演示',
-    en: 'demo',
-  },
   source: {
-    zh: '源码',
-    en: 'source',
+    zh: 'GitHub 源码',
+    en: 'GitHub source',
   },
 }
 
@@ -48,7 +41,11 @@ const detailLabels = {
 
 export function ProjectCard({ project, locale, compact = false }: ProjectCardProps) {
   const projectTitle = text(project.title, locale)
-  const detailHref = `#project/${project.slug}`
+  const primaryAction = getProjectPrimaryAction(project, locale)
+  const ActionIcon = primaryAction.kind === 'source' ? GitBranch : ExternalLink
+  const sharedActionProps = primaryAction.external
+    ? { target: '_blank', rel: 'noreferrer' }
+    : {}
 
   if (!compact) {
     return (
@@ -57,9 +54,22 @@ export function ProjectCard({ project, locale, compact = false }: ProjectCardPro
         whileHover={{ y: -4 }}
       >
         <div className="project-case-inner">
-          <a className="project-screenshot" href={detailHref} aria-label={`${projectTitle} ${linkLabels.detail[locale]}`}>
-            <PlannerPreview locale={locale} compact />
-          </a>
+          {primaryAction.href ? (
+            <a className="project-screenshot" href={primaryAction.href} aria-label={primaryAction.ariaLabel} {...sharedActionProps}>
+              <PlannerPreview locale={locale} compact />
+              <span className="project-screenshot-cta">
+                {primaryAction.label}
+                <ActionIcon size={16} />
+              </span>
+            </a>
+          ) : (
+            <div className="project-screenshot project-screenshot-disabled" aria-label={primaryAction.ariaLabel}>
+              <PlannerPreview locale={locale} compact />
+              <span className="project-screenshot-cta project-screenshot-cta-muted">
+                {primaryAction.label}
+              </span>
+            </div>
+          )}
 
           <div className="project-case-content">
             <div className="mb-6 flex flex-wrap items-center gap-3">
@@ -104,10 +114,24 @@ export function ProjectCard({ project, locale, compact = false }: ProjectCardPro
               </div>
             </div>
 
-            <a className="project-detail-link mt-8" href={detailHref}>
-              {linkLabels.detail[locale]}
-              <ArrowRight size={17} />
-            </a>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {primaryAction.href ? (
+                <a className="project-detail-link project-primary-link" href={primaryAction.href} aria-label={primaryAction.ariaLabel} {...sharedActionProps}>
+                  {primaryAction.label}
+                  <ActionIcon size={17} />
+                </a>
+              ) : (
+                <span className="project-detail-link project-link-disabled" aria-label={primaryAction.ariaLabel}>
+                  {primaryAction.label}
+                </span>
+              )}
+              {project.repoUrl && primaryAction.href !== project.repoUrl && (
+                <a className="project-source-link" href={project.repoUrl} aria-label={`${projectTitle} ${linkLabels.source[locale]}`} target="_blank" rel="noreferrer">
+                  <GitBranch size={17} />
+                  {linkLabels.source[locale]}
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </motion.article>
@@ -147,17 +171,18 @@ export function ProjectCard({ project, locale, compact = false }: ProjectCardPro
         </div>
 
         <div className="mt-6 flex flex-wrap gap-2">
-          <a className="project-detail-link" href={detailHref}>
-            {linkLabels.detail[locale]}
-            <ArrowRight size={16} />
-          </a>
-          {project.demoUrl && (
-            <a className="icon-link" href={project.demoUrl} aria-label={`${projectTitle} ${text(linkLabels.demo, locale)}`}>
-              <ExternalLink size={17} />
+          {primaryAction.href ? (
+            <a className="project-detail-link project-primary-link" href={primaryAction.href} aria-label={primaryAction.ariaLabel} {...sharedActionProps}>
+              {primaryAction.label}
+              <ActionIcon size={16} />
             </a>
+          ) : (
+            <span className="project-detail-link project-link-disabled" aria-label={primaryAction.ariaLabel}>
+              {primaryAction.label}
+            </span>
           )}
-          {project.repoUrl && (
-            <a className="icon-link" href={project.repoUrl} aria-label={`${projectTitle} ${text(linkLabels.source, locale)}`}>
+          {project.repoUrl && primaryAction.href !== project.repoUrl && (
+            <a className="icon-link" href={project.repoUrl} aria-label={`${projectTitle} ${linkLabels.source[locale]}`} target="_blank" rel="noreferrer">
               <GitBranch size={17} />
             </a>
           )}

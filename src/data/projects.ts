@@ -9,7 +9,7 @@ export const statusLabels: Record<ProjectStatus, LocalizedText> = {
   },
   Building: {
     zh: '主项目',
-    en: 'Case study',
+    en: 'Main project',
   },
   Roadmap: {
     zh: '项目方向',
@@ -52,8 +52,8 @@ export const projects: Project[] = [
       en: 'Use AI to create structured tasks, then let users edit, reorder, and confirm priorities.',
     },
     outcome: {
-      zh: '案例呈现任务拆解、编辑确认和状态流转，展示从需求到界面实现的完整思路。',
-      en: 'The current version focuses on task breakdown, editable review, and status flow as a first-stage AI application case study.',
+      zh: '当前版本呈现任务拆解、编辑确认和状态流转，展示从需求到界面实现的完整思路。',
+      en: 'The current version focuses on task breakdown, editable review, and status flow for an AI-assisted task planner.',
     },
     highlights: [
       { zh: '梳理从“输入目标”到“确认计划”的完整用户路径。', en: 'Mapped the full path from goal input to plan review.' },

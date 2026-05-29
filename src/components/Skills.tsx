@@ -37,12 +37,12 @@ const evidenceItems: EvidenceItem[] = [
       en: 'Front-end product UI',
     },
     description: {
-      zh: '用 React 和 TypeScript 做响应式页面、项目详情页和可维护的数据驱动内容。',
-      en: 'Build responsive pages, case-study views, and maintainable data-driven content with React and TypeScript.',
+      zh: '用 React 和 TypeScript 做响应式页面、真实项目入口和可维护的数据驱动内容。',
+      en: 'Build responsive pages, real project entry points, and maintainable data-driven content with React and TypeScript.',
     },
     proof: {
-      zh: '案例：本站作品集与项目详情页',
-      en: 'Evidence: this portfolio and project detail page',
+      zh: '实践：本站作品集、项目卡片和管理后台',
+      en: 'Evidence: this portfolio, project cards, and admin system',
     },
     tags: [
       { zh: 'React', en: 'React' },
@@ -57,8 +57,8 @@ const evidenceItems: EvidenceItem[] = [
       en: 'Engineering habits',
     },
     description: {
-      zh: '把项目内容、状态、技术栈和详情说明拆成结构化数据，让页面内容更容易维护。',
-      en: 'Keep project content, status, stack, and case-study details structured so new work can be added cleanly.',
+      zh: '把项目内容、状态、技术栈和公开链接拆成结构化数据，让页面内容更容易维护。',
+      en: 'Keep project content, status, stack, and public links structured so new work can be added cleanly.',
     },
     proof: {
       zh: '实践：项目数据配置、组件拆分、构建检查',

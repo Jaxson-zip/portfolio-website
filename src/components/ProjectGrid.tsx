@@ -4,16 +4,16 @@ import type { Locale } from '../i18n'
 
 const projectGridContent = {
   kicker: {
-    zh: '项目案例',
-    en: 'Selected work',
+    zh: '项目作品',
+    en: 'Projects',
   },
   heading: {
     zh: '从真实项目出发，展示问题拆解、界面实现和技术选择。',
     en: 'From problem to solution, showing how AI applications are designed and built.',
   },
   summary: {
-    zh: '精选案例围绕背景、目标、实现方式和阶段成果展开。',
-    en: 'Projects are organized by problem, approach, progress, and the tools I use. The portfolio starts with one main build and will add public demos and source links over time.',
+    zh: '有在线版本的项目可直接打开体验；还未上线的项目会明确标注，不用说明页伪装成 Demo。',
+    en: 'Live projects open directly. Work that is not deployed yet is labeled clearly instead of pretending to be a demo.',
   },
   archiveKicker: {
     zh: '项目方向',
@@ -24,8 +24,8 @@ const projectGridContent = {
     en: 'More AI application explorations',
   },
   archiveNote: {
-    zh: '围绕对话助手、知识库问答和交互原型，继续扩展不同类型的应用案例。',
-    en: 'Explorations across conversational assistants, knowledge-base Q&A, and smaller AI utilities',
+    zh: '这些方向会在完成可访问 Demo 或源码整理后再作为正式项目展示。',
+    en: 'These directions will become formal projects after a live demo or source link is ready',
   },
   archiveNoteEnd: {
     zh: '',

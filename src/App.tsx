@@ -1,8 +1,7 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { About } from './components/About'
 import { Contact } from './components/Contact'
 import { Hero } from './components/Hero'
-import { ProjectDetail } from './components/ProjectDetail'
 import { ProjectGrid } from './components/ProjectGrid'
 import { Skills } from './components/Skills'
 import { visibleProfileLinks } from './data/profile'
@@ -49,13 +48,10 @@ function App() {
 
   useEffect(() => {
     const resetScroll = window.setTimeout(() => {
-      if (hash.startsWith('#project/')) {
-        window.scrollTo(0, 0)
-        return
-      }
+      const targetHash = hash.startsWith('#project/') ? '#projects' : hash
 
-      if (hash) {
-        const target = document.querySelector(hash)
+      if (targetHash) {
+        const target = document.querySelector(targetHash)
         if (target instanceof HTMLElement) {
           window.scrollTo(0, target.offsetTop)
         }
@@ -64,12 +60,6 @@ function App() {
 
     return () => window.clearTimeout(resetScroll)
   }, [hash])
-
-  const activeProject = useMemo(() => {
-    if (!hash.startsWith('#project/')) return undefined
-    const slug = hash.replace('#project/', '')
-    return portfolioProjects.find((project) => project.slug === slug)
-  }, [hash, portfolioProjects])
 
   if (hash.startsWith('#admin')) {
     return (
@@ -81,17 +71,11 @@ function App() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#10141a] text-[var(--ink)]">
-      {activeProject ? (
-        <ProjectDetail project={activeProject} locale={locale} onLocaleChange={setLocale} />
-      ) : (
-        <>
-          <Hero locale={locale} onLocaleChange={setLocale} />
-          <ProjectGrid locale={locale} projects={portfolioProjects} />
-          <Skills locale={locale} />
-          <About locale={locale} />
-          {visibleProfileLinks.length > 0 && <Contact locale={locale} />}
-        </>
-      )}
+      <Hero locale={locale} onLocaleChange={setLocale} />
+      <ProjectGrid locale={locale} projects={portfolioProjects} />
+      <Skills locale={locale} />
+      <About locale={locale} />
+      {visibleProfileLinks.length > 0 && <Contact locale={locale} />}
     </main>
   )
 }
